@@ -1,0 +1,35 @@
+
+   {% include 'header.html' %}
+   <br>
+   <br>
+   <form method="POST" action="/store" enctype="multipart/form-data">
+      
+   <div class="card">
+    <div class="card-header">
+      Insert new books
+    </div>
+    <div class="card-body">
+        <h5 class="card-title">data fron book</h5>
+        <p class="card-text">
+            <div class="form-group">
+                <label for="autorName">Autor:</label>
+                <input id="autorName" class="form-control" type="text" name="autor">
+            </div>
+            <div class="form-group">
+                <label for="genero">Genero:</label>
+                <input id="genero" class="form-control" type="text" name="genero">
+            </div>            
+            <div class="form-group">
+                <label for="foto">Foto:</label>
+                <input id="foto" class="form-control" type="file" name="foto">
+            </div> 
+            <div class="form-group">
+                <input type="submit"  class="btn btn-success"value="Agregar">
+                <a href="{{url_for('index')}}" class="btn btn-primary">Regresar</a>
+            </div>
+
+             </form>
+        </p>
+    </div>
+   </div>
+{% include 'fooder.html' %}
