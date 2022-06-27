@@ -6,6 +6,7 @@ from flaskext.mysql import MySQL
 from flask import send_from_directory
 #from web.orm import *
 from datetime import datetime
+from flask_wtf.csrf  import CSRFProtect, CSRFError
 app = Flask(__name__)
 mysql = MySQL()
 app.config['MYSQL_DATABASE_HOST']='localhost'
@@ -17,7 +18,7 @@ carpeta= os.path.join("uploads")
 
 app.config['carpeta']=carpeta
 app.secret_key="biblioteca"
-
+csrf=CSRFProtect(app)
 @app.route('/')
 def index():
     sql="select * from book;"
@@ -83,6 +84,11 @@ def update():
     #addbook(_autor, _genero)
 
     return redirect('/')
+
+@app.errorhandler(CSRFError)
+def handler_csrf_error(e):
+    flash('intentas hackearme?','error')
+    return render_template('book/index.html', reason= e.description),400
 #ediccion de  books
 @app.route('/edit/<int:id>')
 def edit(id):
@@ -106,12 +112,7 @@ def uploads(namefoto):
 
 
 
-@app.route('/params')
-def params():
-    #http://127.0.0.1:5000/params?params1=cristian
-    param = request.args.get('params1','no tiene los parametros')
-    param2 = request.args.get('params2','no tiene los parametros')
-    return 'El parametro es :{},{}'.format(param ,param2)
+
 #almacenamiento de libros
 @app.route('/store', methods=[ 'POST'])
 def store():

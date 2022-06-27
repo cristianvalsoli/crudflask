@@ -4,6 +4,7 @@
    <br>
    <form method="POST" action="/store" enctype="multipart/form-data">
       
+    <input class="form-control" type="hidden" name="csrf_token" value="{{csrf_token()}}">
    <div class="card">
     <div class="card-header">
       Insert new books
